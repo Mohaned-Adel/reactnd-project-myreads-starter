@@ -29,21 +29,21 @@ class BookShelf extends Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <div>
-                    <Shelf 
-                    title="Currently Reading"
-                    books = {currentlyReading}
-                    />
-                    <Shelf
-                    title="Want to Read"
-                    books= {wantToRead}
-                    />
-                    <Shelf
-                    title="Read"
-                    books={Read}
-                    />
+              
+                <Shelf 
+                title="Currently Reading"
+                books = {currentlyReading}
+                />
+                <Shelf
+                title="Want to Read"
+                books= {wantToRead}
+                />
+                <Shelf
+                title="Read"
+                books={Read}
+                />
                
-                </div>
+                
             </div>
             <div className="open-search">
               <Link to='/search' />
