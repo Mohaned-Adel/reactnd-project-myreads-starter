@@ -5,13 +5,16 @@ import * as BookAPI from '../BooksAPI'
 
 class BookShelf extends Component {
     state = {
-        books: [],
         currentlyReading: [],
         wantToRead: [],
         Read: []
     }
 
     componentDidMount() {
+        this.fetchBooks();
+    }
+
+    fetchBooks = () => {
         BookAPI.getAll().then(books => {
             this.setState({
                 books: books,
@@ -33,14 +36,17 @@ class BookShelf extends Component {
                 <Shelf 
                 title="Currently Reading"
                 books = {currentlyReading}
+                onMove = {this.fetchBooks}
                 />
                 <Shelf
                 title="Want to Read"
                 books= {wantToRead}
+                onMove = {this.fetchBooks}
                 />
                 <Shelf
                 title="Read"
                 books={Read}
+                onMove = {this.fetchBooks}
                 />
                
                 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 class Book extends Component {
     render() {
-        const {thumbnail, title, authors, id} = this.props;
+        const {shelf, thumbnail, title, authors, id, moveTo} = this.props;
         return (
             <li key={id}>
                 <div className="book">
@@ -11,7 +11,7 @@ class Book extends Component {
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}>
                     </div>
                     <div className="book-shelf-changer">
-                        <select>
+                        <select value={shelf} onChange={moveTo}>
                         <option value="move" disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
@@ -29,9 +29,11 @@ class Book extends Component {
 }
 
 Book.propTypes = {
+    shelf: PropTypes.string,
     thumbnail: PropTypes.string,
     title: PropTypes.string,
-    authors: PropTypes.array
+    authors: PropTypes.array,
+    moveTo: PropTypes.func
 }
 
 export default Book;
