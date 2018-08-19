@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Route , withRouter} from 'react-router-dom';
 import Book from '../components/Book'
 import * as BookAPI from '../BooksAPI'
 
@@ -9,8 +10,8 @@ class SearchBar extends Component {
         results: []
     }
     
-    searchFor = (event) => {
-        const query = event.target.value.trim();
+    searchFor = (ev) => {
+        const query = ev.target.value.trim();
         
         if(query) {
 
@@ -20,6 +21,14 @@ class SearchBar extends Component {
         }
         
     }
+
+    handleMove = (ev, book) => {
+        const shelf = ev.target.value;
+        BookAPI.update(book, shelf).then(() => {
+            
+          this.props.history.push('/');
+        })
+      }
 
     render() {
         const { results } = this.state;
@@ -37,14 +46,14 @@ class SearchBar extends Component {
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {results.map( (book, id) => (
+                {results && results.length > 0 && results.map( (book, id) => (
                     <Book 
                         key={id}
                         thumbnail={book.imageLinks.thumbnail}
                         title={book.title}
                         authors={book.authors}
-                        shelf={book.shelf}
-                        moveTo={() => {}}
+                        shelf="none"
+                        moveTo={ev => this.handleMove(ev, book)}
                     />
                  ) )}
               </ol>
@@ -54,4 +63,4 @@ class SearchBar extends Component {
     }
 }
 
-export default SearchBar
+export default withRouter(SearchBar);
