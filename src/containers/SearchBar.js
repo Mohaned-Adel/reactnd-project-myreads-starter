@@ -16,7 +16,9 @@ class SearchBar extends Component {
         if(query) {
 
             BookAPI.search(query, 20).then((results) => {
+                results = results.filter(book => book.imageLinks);
                 this.setState({results})
+                
             })
         }
         
