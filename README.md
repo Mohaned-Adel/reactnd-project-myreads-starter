@@ -68,11 +68,3 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## issues 
-
-at this moment there is an issue with my code and i don't know how to solve it, the app should 
-```
-Search results are not shown when all of the text is deleted out of the search input box.
-```
-but it dosn't do that and i don't know why.
