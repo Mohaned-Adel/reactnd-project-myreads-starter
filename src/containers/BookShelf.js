@@ -4,10 +4,16 @@ import Shelf from '../components/Shelf'
 import * as BookAPI from '../BooksAPI'
 
 class BookShelf extends Component {
-    state = {
-        currentlyReading: [],
-        wantToRead: [],
-        Read: []
+    constructor(props) {
+        super(props)
+        this.state = {
+            books: [],
+            currentlyReading: [],
+            wantToRead: [],
+            Read: []
+        }
+
+        this.getBookById = this.getBookById.bind(this)
     }
 
     componentDidMount() {
@@ -24,6 +30,20 @@ class BookShelf extends Component {
             })
         })
     }
+
+    getBookById(id) {
+        let books
+      
+          if(this.state.books) {
+            books = this.state.books.filter((book) => book.id === id)
+            if (books.length > 0) {
+              return books[0]
+            } else {
+              return null
+            }
+          }
+    }
+
     render() {
         const {currentlyReading, wantToRead, Read} = this.state;
         return (
@@ -36,16 +56,19 @@ class BookShelf extends Component {
                 <Shelf 
                 title="Currently Reading"
                 books = {currentlyReading}
+                getBookById = {this.getBookById}
                 onMove = {this.fetchBooks}
                 />
                 <Shelf
                 title="Want to Read"
                 books= {wantToRead}
+                getBookById = {this.getBookById}
                 onMove = {this.fetchBooks}
                 />
                 <Shelf
                 title="Read"
                 books={Read}
+                getBookById = {this.getBookById}
                 onMove = {this.fetchBooks}
                 />
                
