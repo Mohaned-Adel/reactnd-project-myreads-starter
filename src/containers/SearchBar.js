@@ -36,42 +36,29 @@ class SearchBar extends Component {
         })
       }
     
-    handleChange = (event) => {
-        this.setState({value: event.target.value.trim()})
-    }
-    
-    handleSubmit(event, value, results) {
-        console.log(value);
-        if(value && value !== '') {
-            console.log("results");
-            BookAPI.search(value, 20).then((results) => {
+    handleSubmit(event, results) {
+        this.setState({
+            value: event.target.value,
+            results: []
+        })
+
+        console.log(event.target.value.length);
+
+        if(this.state.value.length !== 0) {
+            
+            BookAPI.search(event.target.value, 50).then((results) => {
                 this.setState({results})
                 console.log(results);                
-            }).catch(() => {console.log('error')})
+            }).catch((error) => {console.log(error)} )
+
         } else {
-            results = [];
-            let booksContent = document.querySelector('.books-grid');
-            booksContent.innerHTML = '';
+            this.setState({
+                results: []
+            })
         }
-        // console.log(results);
-        event.preventDefault();
     }
 
-    // handleMove = (ev, book) => {
-    //     const shelf = ev.target.value;
-    //     BookAPI.update(book, shelf).then(() => {} )
-    // }
 
-    // handleShelf = (results, ShelfBooks) => {
-    //     results.map(book => {
-    //         if(book.id == ShelfBooks.filter(shelfBook => (shelfBook.id === book.id))) {
-    //             return book.id
-    //         } else {
-    //             return 'none'
-    //         }
-    //     })
-        
-    // }
 
     componentDidMount() {
         BookAPI.getAll().then(ShelfBooks => {
@@ -92,17 +79,15 @@ class SearchBar extends Component {
                 type="text" 
                 placeholder="Search by title or author"
                 value={value}
-                onChange={this.handleChange}/>
-
-                <input 
-                type="submit"
-                onClick={event => this.handleSubmit(event, value, results)} />
+                onChange={ event => 
+                    this.handleSubmit(event, results)
+                }/>
 
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {results && results.length > 0 && results.map( (book) => (
+                {results && results.length>0 && value.length > 0 && results.map( (book) => (
                     <Book
                         book={book} 
                         key={book.id}
